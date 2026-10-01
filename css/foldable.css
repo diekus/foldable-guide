@@ -1,0 +1,103 @@
+/*
+ * foldable.css — scaffold for foldable layouts.
+ *
+ * Every block below is intentionally EMPTY. Add your app's styles to the
+ * block that matches the posture/device you are targeting. The demo
+ * Inspector's own foldable layout lives in inspector.css as a worked example.
+ *
+ * How the fallback works
+ * ----------------------
+ * Browsers that don't implement the Device Posture API or the Viewport
+ * Segments API treat these media features as unknown, so the queries never
+ * match and these rules are ignored: the base single-screen layout stays
+ * untouched. When you read segment geometry with env(), always pass a
+ * fallback value, e.g. env(viewport-segment-width 0 0, 100vw).
+ *
+ * Useful values
+ * -------------
+ *   env(viewport-segment-width  x y)   env(viewport-segment-height x y)
+ *   env(viewport-segment-top    x y)   env(viewport-segment-bottom x y)
+ *   env(viewport-segment-left   x y)   env(viewport-segment-right  x y)
+ *   x = column index, y = row index of the segment.
+ *
+ * Fold/hinge size:
+ *   side-by-side: calc(env(viewport-segment-left 1 0) - env(viewport-segment-right 0 0))
+ *   stacked:      calc(env(viewport-segment-top 0 1) - env(viewport-segment-bottom 0 0))
+ */
+
+:root {
+  /* Shared helpers. Fallbacks resolve to a single full-viewport segment. */
+  --fold-width: calc(env(viewport-segment-left 1 0, 0px) - env(viewport-segment-right 0 0, 0px));
+  --fold-height: calc(env(viewport-segment-top 0 1, 0px) - env(viewport-segment-bottom 0 0, 0px));
+}
+
+/* ======================================================================
+ * 1. Posture only
+ * ====================================================================== */
+
+@media (device-posture: continuous) {
+  /* Flat screen: any phone, tablet or desktop, and a Flip/Fold opened
+     completely flat. Usually no changes are needed here. */
+}
+
+@media (device-posture: folded) {
+  /* Device is partly folded (any foldable, any orientation).
+     Good place for posture-wide tweaks, e.g. larger touch targets. */
+}
+
+/* ======================================================================
+ * 2. Flip style / tabletop — two segments STACKED (horizontal fold)
+ *    Galaxy Z Flip, Motorola Razr, Pixel/Huawei flip phones half-open,
+ *    or a book-style Fold rotated to landscape and half-open.
+ * ====================================================================== */
+
+@media (vertical-viewport-segments: 2) {
+  /* Top segment:    env(viewport-segment-*  0 0)
+     Bottom segment: env(viewport-segment-*  0 1)
+     Typical pattern: content/viewer on top, controls on the bottom. */
+}
+
+@media (vertical-viewport-segments: 2) and (device-posture: folded) {
+  /* Tabletop / laptop posture specifically (device is bent, not flat). */
+}
+
+/* ======================================================================
+ * 3. Book style — two segments SIDE BY SIDE (vertical fold)
+ *    Galaxy Z Fold, Galaxy Z Fold Ultra, Pixel Fold, foldable iPhone,
+ *    Huawei book-style foldables half-open.
+ * ====================================================================== */
+
+@media (horizontal-viewport-segments: 2) {
+  /* Left segment:  env(viewport-segment-* 0 0)
+     Right segment: env(viewport-segment-* 1 0)
+     Typical pattern: list on the left, detail on the right. */
+}
+
+@media (horizontal-viewport-segments: 2) and (device-posture: folded) {
+  /* Book posture specifically (device is bent like an open book). */
+}
+
+/* ======================================================================
+ * 4. Dual-screen with a physical hinge — Microsoft Surface Duo
+ *    Spanned across both screens. Segments are side by side (portrait)
+ *    or stacked (landscape) with a non-zero gap: --fold-width/--fold-height.
+ *    Never place content in the gap, it is not visible.
+ * ====================================================================== */
+
+@media (horizontal-viewport-segments: 2) and (device-posture: continuous) {
+  /* Surface Duo spanned flat (180°) in portrait. */
+}
+
+@media (vertical-viewport-segments: 2) and (device-posture: continuous) {
+  /* Surface Duo spanned flat (180°) in landscape. */
+}
+
+/* ======================================================================
+ * 5. Small single screens — flip cover screens
+ *    Galaxy Z Flip / Razr folded shut. Not exposed by the APIs: it's just a
+ *    small viewport, so use regular size queries.
+ * ====================================================================== */
+
+@media (max-width: 22rem), (max-height: 22rem) {
+  /* Compact layout for cover screens and other very small viewports. */
+}

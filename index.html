@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- viewport-fit=cover lets the layout reach edge-to-edge on foldables; safe areas are handled in CSS. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Foldable Guide · Posture Inspector</title>
+  <meta name="description" content="A framework-free PWA boilerplate for foldable devices, demonstrating the Device Posture API and the Viewport Segments API.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1b2b" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/foldable.css">
+  <link rel="stylesheet" href="css/inspector.css">
+
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="app-header">
+    <img class="app-header__logo" src="icons/icon.svg" alt="" width="28" height="28">
+    <span class="app-header__title">Foldable Guide</span>
+  </header>
+
+  <main id="main" class="inspector">
+    <!-- Primary pane: first segment (left in book posture, top in tabletop). -->
+    <div class="pane pane--primary">
+      <section class="intro" aria-labelledby="title">
+        <h1 id="title">Posture Inspector</h1>
+        <p>Live readout of this device's posture and viewport segments. Fold, unfold or rotate your device and watch the layout adapt.</p>
+      </section>
+
+      <section class="panel" aria-labelledby="posture-heading">
+        <h2 id="posture-heading">Posture</h2>
+        <posture-readout></posture-readout>
+      </section>
+
+      <section class="panel" aria-labelledby="map-heading">
+        <h2 id="map-heading">Segment map</h2>
+        <segment-map></segment-map>
+      </section>
+    </div>
+
+    <!-- Secondary pane: second segment (right in book posture, bottom in tabletop). -->
+    <div class="pane pane--secondary">
+      <section class="panel" aria-labelledby="segments-heading">
+        <h2 id="segments-heading">Viewport segments</h2>
+        <segments-readout></segments-readout>
+      </section>
+
+      <section class="panel" aria-labelledby="support-heading">
+        <h2 id="support-heading">API support</h2>
+        <support-status></support-status>
+      </section>
+
+      <section class="panel about" aria-labelledby="about-heading">
+        <h2 id="about-heading">About this demo</h2>
+        <p>Foldable Guide is a starting point for foldable-ready web apps, built with plain HTML, CSS and JavaScript.</p>
+        <ul>
+          <li><strong>Book style</strong> (Galaxy Z Fold, Pixel Fold, foldable iPhone): panes sit side by side, one per segment.</li>
+          <li><strong>Flip style / tabletop</strong> (Galaxy Z Flip, Razr): panes stack, one per segment.</li>
+          <li><strong>Dual-screen</strong> (Surface Duo): content stays clear of the hinge.</li>
+        </ul>
+        <p>No foldable? In Chrome DevTools, open device emulation and pick a foldable device, or use the <em>Sensors</em> panel to change the posture.</p>
+        <p><a href="https://github.com/diekus/foldable-guide">Source code on GitHub</a></p>
+      </section>
+    </div>
+  </main>
+
+  <div id="announcer" class="visually-hidden" aria-live="polite" role="status"></div>
+</body>
+</html>
