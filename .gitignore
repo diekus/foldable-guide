@@ -1,0 +1,13 @@
+prompts/
+node_modules/
+test-results/
+playwright-report/
+tests/
+specs/
+scripts/
+package-lock.json
+package.json
+playwright.config.js
+.DS_Store
+.github/
+README.md

@@ -1,0 +1,328 @@
+/*
+ * Posture Inspector — the demo's own styles.
+ * The foldable layouts at the bottom are a worked example of the blocks
+ * scaffolded in foldable.css. Replace this file when you fork.
+ *
+ * Structure:
+ *   main.inspector
+ *     .pane--primary    intro, posture, segment map
+ *     .pane--secondary  segment details, API support, about
+ */
+
+/* ---------- Default: single screen, mobile first ---------- */
+
+.inspector {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+}
+
+.pane {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+  min-width: 0;
+}
+
+/* Masonry-style panels: grid-lanes where supported, regular grid otherwise. */
+.pane--secondary {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  align-items: start;
+}
+
+@supports (display: grid-lanes) {
+  .pane--secondary {
+    display: grid-lanes;
+  }
+}
+
+.intro p {
+  color: var(--color-text-muted);
+  margin-top: var(--space-2);
+  max-width: 60ch;
+}
+
+.about ul {
+  padding-left: var(--space-5);
+}
+
+.about li + li {
+  margin-top: var(--space-2);
+}
+
+/* ---------- Desktop / large screens ---------- */
+
+@media (min-width: 56rem) {
+  .inspector {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: var(--space-5);
+    padding-block: var(--space-6);
+  }
+}
+
+/* ---------- Readouts ---------- */
+
+.readout-value {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  font-family: var(--font-mono);
+  overflow-wrap: anywhere;
+}
+
+.readout-note {
+  color: var(--color-text-muted);
+  margin-top: var(--space-2);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-2) var(--space-4);
+}
+
+.facts dt {
+  color: var(--color-text-muted);
+}
+
+.facts dd {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin-top: var(--space-4);
+}
+
+.segments-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.segments-table caption {
+  text-align: start;
+  font-weight: 600;
+  padding-bottom: var(--space-2);
+}
+
+.segments-table th,
+.segments-table td {
+  padding: var(--space-2);
+  border-bottom: var(--border-width) solid var(--color-border);
+  text-align: end;
+  white-space: nowrap;
+}
+
+.segments-table th:first-child,
+.segments-table td:first-child {
+  text-align: start;
+}
+
+.segments-table td {
+  font-family: var(--font-mono);
+}
+
+/* ---------- Support status ---------- */
+
+.support-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.support-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.badge {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  padding: 0.1em 0.6em;
+  border-radius: 999px;
+  border: var(--border-width) solid currentColor;
+  white-space: nowrap;
+}
+
+.badge--ok {
+  color: var(--color-ok);
+}
+
+.badge--no {
+  color: var(--color-warn);
+}
+
+/* ---------- Segment map ---------- */
+
+.segment-map__frame {
+  position: relative;
+  width: 100%;
+  max-height: 22rem;
+  aspect-ratio: var(--map-ratio, 16 / 10);
+  margin-inline: auto;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--color-fold) 0 4px,
+    transparent 4px 10px
+  );
+  border: 2px solid var(--color-text-muted);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+/* Keep tall (portrait) maps from growing too large. */
+.segment-map__frame[data-portrait] {
+  width: auto;
+  height: 18rem;
+  max-width: 100%;
+}
+
+.segment-map__segment {
+  position: absolute;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  background: var(--color-segment);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  font-family: var(--font-mono);
+  outline: 1px solid var(--color-border);
+}
+
+.segment-map__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.segment-map__swatch {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  margin-right: var(--space-1);
+  vertical-align: -0.1em;
+  border: 1px solid var(--color-border);
+}
+
+.segment-map__swatch--segment {
+  background: var(--color-segment);
+}
+
+.segment-map__swatch--fold {
+  background: var(--color-fold);
+}
+
+/* ======================================================================
+ * Foldable layouts (see foldable.css for the full list of configurations)
+ * Each pane is placed on its own segment and scrolls independently;
+ * nothing is ever drawn under the fold or hinge.
+ * ====================================================================== */
+
+/* Book style (Fold, Pixel Fold, foldable iPhone) and Surface Duo portrait:
+   segments side by side. Primary pane left, secondary pane right. */
+@media (horizontal-viewport-segments: 2) {
+  body {
+    height: 100dvh;
+  }
+
+  .inspector {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+    min-height: 0;
+    grid-template-rows: minmax(0, 1fr);
+    grid-template-columns:
+      env(viewport-segment-width 0 0, 1fr)
+      var(--fold-width)
+      minmax(0, 1fr);
+  }
+
+  .pane {
+    min-height: 0;
+    overflow-y: auto;
+    padding: var(--space-4);
+  }
+
+  .pane--primary {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .pane--secondary {
+    grid-column: 3;
+    grid-row: 1;
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Flip style / tabletop (Flip, Razr, rotated Fold) and Surface Duo landscape:
+   segments stacked. Primary pane on top, secondary pane on the bottom. */
+@media (vertical-viewport-segments: 2) {
+  body {
+    height: 100dvh;
+  }
+
+  .inspector {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    /* Top row = top segment minus the header; the header sits above it. */
+    grid-template-rows:
+      minmax(0, 1fr)
+      var(--fold-height)
+      env(viewport-segment-height 0 1, 1fr);
+  }
+
+  .pane {
+    min-height: 0;
+    overflow-y: auto;
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .pane--primary {
+    grid-row: 1;
+  }
+
+  .pane--secondary {
+    grid-row: 3;
+  }
+
+  /* The top segment is short on flip phones: compact intro and map. */
+  .intro h1 {
+    font-size: var(--text-xl);
+  }
+
+  .intro p {
+    display: none;
+  }
+
+  /* Keep the map short enough to fit the top segment. */
+  .segment-map__frame,
+  .segment-map__frame[data-portrait] {
+    max-height: 9rem;
+  }
+
+  .segment-map__frame[data-portrait] {
+    height: 9rem;
+  }
+}
+
+/* Tabletop posture: the bottom half lies flat, like a laptop keyboard.
+   Give it a subtle "control surface" background. */
+@media (vertical-viewport-segments: 2) and (device-posture: folded) {
+  .pane--secondary {
+    background: var(--color-surface-2);
+  }
+}

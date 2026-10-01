@@ -1,0 +1,71 @@
+/*
+ * Design tokens.
+ * Palette derived from the app icon: periwinkle (accent), aqua (segments),
+ * magenta (fold/hinge), charcoal-tinted neutrals. Rebrand a fork by
+ * editing only this file.
+ * Light/dark follows the system theme (no toggle). All text/background
+ * pairs below meet WCAG 2.2 AA contrast.
+ */
+:root {
+  color-scheme: light dark;
+
+  /* Color — light */
+  --color-bg: #f6f6ff;
+  --color-surface: #ffffff;
+  --color-surface-2: #ecedfb;
+  --color-text: #1e1f2e;
+  --color-text-muted: #545773;
+  --color-border: #c9cbe8;
+  --color-accent: #4a52d9;
+  --color-accent-contrast: #ffffff;
+  --color-ok: #00715f;
+  --color-warn: #8a4600;
+  --color-fold: #e0006a;
+  --color-segment: #c9fbf1;
+  --color-focus: #4a52d9;
+
+  /* Typography */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.75rem;
+  --text-2xl: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);
+  --leading: 1.5;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+
+  /* Shape */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --border-width: 1px;
+
+  /* Layout */
+  --content-max: 72rem;
+  --header-height: 3rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #11121d;
+    --color-surface: #1a1b2b;
+    --color-surface-2: #252739;
+    --color-text: #e9eaf7;
+    --color-text-muted: #a9acc8;
+    --color-border: #3d4060;
+    --color-accent: #9aa1ff;
+    --color-accent-contrast: #0d0f2a;
+    --color-ok: #3ce6c6;
+    --color-warn: #f0b05a;
+    --color-fold: #ff4f9e;
+    --color-segment: #123f3b;
+    --color-focus: #9aa1ff;
+  }
+}
