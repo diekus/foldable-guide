@@ -14,11 +14,14 @@ export function supportsViewportSegments() {
 }
 
 /**
- * Whether the browser understands a CSS media feature. Unknown media
- * features make the whole query invalid, which matchMedia reports as "not all".
+ * Whether the browser understands a CSS media feature.
+ * Checking `.media !== 'not all'` is not reliable: modern browsers keep the
+ * original text for unknown features instead of rewriting it to "not all".
+ * An unknown feature evaluates to "unknown", so neither the query nor its
+ * negation matches; a supported feature always matches exactly one of them.
  */
 export function supportsMediaFeature(query) {
-  return window.matchMedia(query).media !== 'not all';
+  return window.matchMedia(query).matches || window.matchMedia(`not ${query}`).matches;
 }
 
 /** Window Controls Overlay (installed desktop PWAs). */

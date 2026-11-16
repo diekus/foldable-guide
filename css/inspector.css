@@ -24,15 +24,22 @@
   min-width: 0;
 }
 
-/* Masonry-style panels: grid-lanes where supported, regular grid otherwise. */
+/* Masonry-style panels: grid-lanes where supported, wrapping flex otherwise. */
 .pane--secondary {
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
-  align-items: start;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.pane--secondary > * {
+  flex: 1 1 min(100%, 20rem);
+  min-width: 0;
 }
 
 @supports (display: grid-lanes) {
   .pane--secondary {
     display: grid-lanes;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
   }
 }
 
@@ -261,6 +268,11 @@
     grid-column: 3;
     grid-row: 1;
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Flex fallback: one panel per row on the narrow segment. */
+  .pane--secondary > * {
+    flex-basis: 100%;
   }
 }
 

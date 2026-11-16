@@ -8,7 +8,7 @@
  *
  * Bump VERSION whenever a precached file changes so clients get the update.
  */
-const VERSION = 'v1';
+const VERSION = 'v2';
 const CACHE = `foldable-guide-${VERSION}`;
 
 const PRECACHE = [
